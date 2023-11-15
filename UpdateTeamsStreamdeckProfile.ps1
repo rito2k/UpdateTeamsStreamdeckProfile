@@ -41,16 +41,32 @@ if (Test-Path $path) {
             Write-Host "NEW AppIdentifier: " -NoNewline -ForegroundColor Cyan
             Write-Host $NewTeamsEXEPath
 
-            <#
-            # UNCOMMENT THIS SECTION to indeed update the AppIdentifier
-            $content.AppIdentifier = $NewTeamsEXEPath
+            if ($content.AppIdentifier -eq $NewTeamsEXEPath){
+                Write-Host "The AppIdentifier are the same, no update required!" -ForegroundColor Yellow
+                exit
+            }
 
-            # Convert the modified object back to a JSON string
-            $json = $content | ConvertTo-Json -Depth 20
+            # Initialize a variable for the user's response
+            $response = ""
 
-            # Write the JSON string back to the file
-            Set-Content -Path $file.FullName -Value $json
-            #>
+            # Start a while loop that continues until the user enters 'y' or 'n'
+            while ($response -ne 'y' -and $response -ne 'n') {
+                # Ask the user for input
+                $response = Read-Host "Do you want to continue? (y/n)"
+
+                # Check the user's response
+                if ($response -eq 'y') {                    
+                    # Update the AppIdentifier
+                    $content.AppIdentifier = $NewTeamsEXEPath
+
+                    # Convert the modified object back to a JSON string
+                    $json = $content | ConvertTo-Json -Depth 20
+
+                    # Write the JSON string back to the file
+                    Set-Content -Path $file.FullName -Value $json
+            
+                }
+            }
         }
     }
     if (!$found){
