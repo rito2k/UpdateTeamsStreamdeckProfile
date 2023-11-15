@@ -1,5 +1,5 @@
 ﻿# Define the name of your Teams profile in Stream Deck
-$StreamDeckTeamsProfileName = "Teams Profil"
+$StreamDeckTeamsProfileName = "Teams Profile"
 #$StreamDeckTeamsProfileName = '"Name": "'+$StreamDeckTeamsProfileName+'",'
 # Define the path to ElGato StreamDeck profiles folder
 $path = "$env:USERPROFILE\AppData\Roaming\Elgato\StreamDeck\ProfilesV2"
