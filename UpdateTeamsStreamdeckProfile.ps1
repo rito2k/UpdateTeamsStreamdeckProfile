@@ -1,10 +1,11 @@
 ﻿# Define the name of your Teams profile in Stream Deck
 $StreamDeckTeamsProfileName = "Teams Profile"
-#$StreamDeckTeamsProfileName = '"Name": "'+$StreamDeckTeamsProfileName+'",'
+
 # Define the path to ElGato StreamDeck profiles folder
 $path = "$env:USERPROFILE\AppData\Roaming\Elgato\StreamDeck\ProfilesV2"
 Write-Host "Search path: " -NoNewline -ForegroundColor Cyan
 Write-Host $path
+
 # Check if the path exists
 if (Test-Path $path) {
     # Get the current (updated) Teams client path
