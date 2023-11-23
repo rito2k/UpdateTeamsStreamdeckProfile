@@ -52,10 +52,19 @@ if (Test-Path $path) {
             # Start a while loop that continues until the user enters 'y' or 'n'
             while ($response -ne 'y' -and $response -ne 'n') {
                 # Ask the user for input
-                $response = Read-Host "Do you want to continue? (y/n)"
+                $response = Read-Host "We need to close Teams client and StremDeck app. Do you want to continue? (y/n)"
 
                 # Check the user's response
-                if ($response -eq 'y') {                    
+                if ($response -eq 'y') {
+                    
+                    # Get EXE path and Close Teams client & StremDeck app
+                    $streamDeckPath = (Get-Process StreamDeck -ErrorAction SilentlyContinue).Path
+                    if (!$streamDeckPath){
+                        $streamDeckPath = "$env:ProgramFiles\Elgato\StreamDeck\StreamDeck.exe"
+                    }
+                    Stop-Process -Name ms-teams -Force -ErrorAction SilentlyContinue
+                    Stop-Process -Name StreamDeck -Force -ErrorAction SilentlyContinue
+
                     # Update the AppIdentifier
                     $content.AppIdentifier = $NewTeamsEXEPath
 
@@ -64,7 +73,11 @@ if (Test-Path $path) {
 
                     # Write the JSON string back to the file
                     Set-Content -Path $file.FullName -Value $json
-            
+
+                    # Start Teams client and StremDeck app
+                    
+                    Start-Process -FilePath $NewTeamsEXEPath -ErrorAction SilentlyContinue
+                    Start-Process -FilePath $streamDeckPath -ErrorAction SilentlyContinue            
                 }
             }
         }
