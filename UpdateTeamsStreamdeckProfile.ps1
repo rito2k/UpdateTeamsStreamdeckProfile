@@ -41,13 +41,24 @@ if (Test-Path $path) {
             Write-Host "NEW AppIdentifier: " -NoNewline -ForegroundColor Cyan
             Write-Host $NewTeamsEXEPath
 
-            if ($content.AppIdentifier -eq $NewTeamsEXEPath){
-                Write-Host "The AppIdentifier are the same, no update required!" -ForegroundColor Yellow
-                exit
+            # Initialize a variable for the user's response
+            $response = $null
+            if ($content.AppIdentifier -eq $NewTeamsEXEPath){                
+                # Start a while loop that continues until the user enters 'y' or 'n'
+                while ($response -ne 'y' -and $response -ne 'n') {
+                    # Ask the user for input
+                    $response = Read-Host "The AppIdentifiers are the same, no update required. Force anyway? (y/n)"
+
+                    # Check the user's response
+                    if ($response -eq 'n') {
+                        # Exit the script
+                        exit
+                    }
+                }
             }
 
             # Initialize a variable for the user's response
-            $response = ""
+            $response = $null
 
             # Start a while loop that continues until the user enters 'y' or 'n'
             while ($response -ne 'y' -and $response -ne 'n') {
